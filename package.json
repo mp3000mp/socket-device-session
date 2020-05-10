@@ -1,0 +1,32 @@
+{
+  "name": "socket-shared-session",
+  "version": "1.0.0",
+  "description": "Express shared session",
+  "main": "index.js",
+  "scripts": {
+    "es": "eslint .",
+    "esf": "eslint . --fix",
+    "tu": "echo \"todo\" && exit 1",
+    "tuc": "echo \"todo\" && exit 1",
+    "start": "node index.js",
+    "dev": "webpack -d",
+    "watch": "webpack -d --watch",
+    "build": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mp3000mp/socket-shared-session.git"
+  },
+  "author": "mp3000mp",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "ioredis": "^4.16.3",
+    "mariadb": "^2.3.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.0.0"
+  }
+}

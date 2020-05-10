@@ -1,0 +1,16 @@
+# IDE
+/.idea
+
+# npm/yarn
+/node_modules
+/npm-debug.log
+/package-lock.json
+/yarn-debug.log
+/yarn.lock
+
+# project
+/.env.local
+/.env.test
+/log
+/ic
+/var
