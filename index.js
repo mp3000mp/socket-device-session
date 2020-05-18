@@ -4,9 +4,8 @@ require('dotenv').config({path: './.env.local'});
 const Mariadb = require('mariadb');
 const Redis = require('ioredis');
 const express = require('express');
-const SharedSessionManager = require('./src/helper/shared-session-manager');
+const DeviceSessionManager = require('./src/helper/device-session-manager');
 const app = express();
-const io = require('socket.io')();
 
 // connect db
 const mariadbPool = Mariadb.createPool({
@@ -49,20 +48,26 @@ mariadbPool.getConnection()
 		app.get('/ping', (req, res) => {
 			appController.ping(req, res);
 		});
+    app.get('/status', (req, res) => {
+      appController.status(req, res);
+    });
 
 		// start server
-		/*let server = */app.listen(process.env.APP_PORT, () => {
-			console.log(`${process.env.APP_NAME} listenning port ${  process.env.APP_PORT}`);
+		let server = app.listen(process.env.APP_PORT, () => {
+			console.log(`${process.env.APP_NAME} listenning port ${process.env.APP_PORT}`);
 		});
 
 		// socket server
-		let sharedSessionManager = new SharedSessionManager(io, redis, mariadbConn);
+    const io = require('socket.io')(server);
+		let deviceSessionManager = new DeviceSessionManager(io, redis, mariadbConn);
 
 		// debug
 		if(process.env.APP_ENV !== 'prod'){
 			setInterval(() => {
-				console.log(sharedSessionManager.debug());
-			},5000);
+			  let usedMemory = Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100;
+			  console.log('Used memory: ' + usedMemory + 'MB');
+				console.log(deviceSessionManager.debug());
+			},2500);
 		}
 
 	})
